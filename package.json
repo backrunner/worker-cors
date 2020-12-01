@@ -1,0 +1,10 @@
+{
+  "name": "worker-cors",
+  "version": "1.0.0",
+  "description": "A cors proxy that can be deployed on Cloudflare Worker.",
+  "scripts": {
+    "build": "node ./generator.js"
+  },
+  "author": "BackRunner",
+  "license": "MIT"
+}
