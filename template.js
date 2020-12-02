@@ -62,7 +62,7 @@ addEventListener('fetch', (event) => {
     return;
   }
   let pass = false;
-  if (WHITELIST && Array.isArray(WHITELIST)) {
+  if (WHITELIST && Array.isArray(WHITELIST) && WHITELIST.length > 0) {
     for (const o of WHITELIST) {
       if (origin === o.replace(/\/$/, '')) {
         pass = true;
