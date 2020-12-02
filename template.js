@@ -1,5 +1,5 @@
 const HOST = '${CF_HOST}';
-const WHITELIST = CF_WHITELIST;
+const WHITELIST = ${CF_WHITELIST};
 
 const URL_TESTER = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
 
@@ -64,7 +64,7 @@ addEventListener('fetch', (event) => {
   let pass = false;
   if (WHITELIST && Array.isArray(WHITELIST)) {
     for (const o of WHITELIST) {
-      if (origin === o) {
+      if (origin === o.replace(/\/$/, '')) {
         pass = true;
         break;
       }
