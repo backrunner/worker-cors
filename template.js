@@ -47,8 +47,8 @@ async function handleRequest(request) {
   request.headers.delete('Origin');
   request.headers.delete('Referer');
   const response = await fetch(request);
-  res.headers.set('Access-Control-Allow-Origin', '*');
-  res.headers.set('Vary', 'Origin');
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Vary', 'Origin');
   return response;
 }
 
