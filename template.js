@@ -39,17 +39,39 @@ async function handleRequest(request) {
   if (!URL_TESTER.test(url)) {
     return paramError();
   }
+  const req = new Request(url);
   const ip = request.headers.get('CF-Connecting-IP');
   if (ip) {
-    request.headers.set('X-Forwarded-For', ip);
-    request.headers.set('X-Real-IP', ip);
+    req.headers.set('X-Forwarded-For', ip);
+    req.headers.set('X-Real-IP', ip);
   }
-  request.headers.delete('Origin');
-  request.headers.delete('Referer');
-  const response = await fetch(request);
-  response.headers.set('Access-Control-Allow-Origin', '*');
-  response.headers.set('Vary', 'Origin');
-  return response;
+  for (const pair of request.headers.entries()) {
+    const name = pair[0].toLowerCase();
+    if (
+      name !== 'origin' &&
+      name !== 'x-forwarded-for' &&
+      name !== 'x-real-ip' &&
+      name !== 'referer' &&
+      !name.startsWith('cf-') &&
+      !name.startsWith(':') &&
+      !name.startsWith('sec-') &&
+      !name.includes('cors')
+    ) {
+      req.headers.set(pair[0], pair[1]);
+    }
+  }
+  const response = await fetch(req${CACHE_CONFIG});
+  const res = new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+  });
+  for (const pair of response.headers.entries()) {
+    res.headers.set(pair[0], pair[1]);
+  }
+  res.headers.set('Access-Control-Allow-Origin', '*');
+  res.headers.set('Vary', 'Origin');
+  ${BROWSER_CACHE_CONFIG}
+  return res;
 }
 
 addEventListener('fetch', (event) => {
@@ -74,6 +96,7 @@ addEventListener('fetch', (event) => {
     event.respondWith(new Response('Origin is not in whitelist.', {
       status: 400,
     }));
+    return;
   }
   switch (request.method) {
     case 'OPTIONS':
