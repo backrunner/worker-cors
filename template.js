@@ -66,6 +66,10 @@ async function handleRequest(request) {
     statusText: response.statusText,
   });
   for (const pair of response.headers.entries()) {
+    // remove csp
+    if (pair[0].toLocaleLowerCase() === 'content-security-policy') {
+      return;
+    }
     res.headers.set(pair[0], pair[1]);
   }
   res.headers.set('Access-Control-Allow-Origin', '*');
