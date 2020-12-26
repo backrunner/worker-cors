@@ -68,7 +68,7 @@ async function handleRequest(request) {
   for (const pair of response.headers.entries()) {
     // remove csp
     if (pair[0].toLocaleLowerCase() === 'content-security-policy') {
-      return;
+      continue;
     }
     res.headers.set(pair[0], pair[1]);
   }
