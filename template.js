@@ -1,7 +1,7 @@
 const HOST = '${CF_HOST}';
 const WHITELIST = ${CF_WHITELIST};
 
-const URL_TESTER = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
+const URL_TESTER = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
 
 const getUrl = s => s.replace(`https://${HOST}/`, '');
 

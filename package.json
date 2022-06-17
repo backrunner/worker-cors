@@ -1,6 +1,6 @@
 {
   "name": "worker-cors",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A cors proxy that can be deployed on Cloudflare Worker.",
   "scripts": {
     "build": "node ./generator.js"
